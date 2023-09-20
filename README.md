@@ -1,4 +1,4 @@
-[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/ucs-compute-solutions/FlexPod-UCSM-VMware)
+
 
 # FlexPod Converged Infrastructure setup using Ansible for FlexPod Datacenter with Cisco UCSM M6, VMware vSphere 8, and NetApp ONTAP 9.12.1
 
