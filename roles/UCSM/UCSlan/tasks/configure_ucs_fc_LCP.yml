@@ -1,0 +1,54 @@
+---
+# Configure FC LAN Connectivity Policies when configure_fc is set
+#
+- name: Configure 5G VIC FC LAN Connectivity Policy
+  cisco.ucs.ucs_lan_connectivity:
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    name: "{{ v5G_fc_lan_conn_policy }}"
+    org_dn: org-root/org-{{ organization }}
+    vnic_list:
+    - name: 00-{{ vnic_template_list[0].name }}
+      vnic_template: "{{ vnic_template_list[0].name}}"
+      adapter_policy: 'VMWare'
+      order: '1'
+    - name: 01-{{ vnic_template_list[1].name }}
+      vnic_template: "{{ vnic_template_list[1].name}}"
+      adapter_policy: 'VMWare'
+      order: '2'
+    - name: 02-{{ vnic_template_list[2].name }}
+      vnic_template: "{{ vnic_template_list[2].name}}"
+      adapter_policy: "{{ v5G_16RxQs_adapter_policy_name }}"
+      order: '3'
+    - name: 03-{{ vnic_template_list[3].name }}
+      vnic_template: "{{ vnic_template_list[3].name}}"
+      adapter_policy: "{{ v5G_16RxQs_adapter_policy_name }}"
+      order: '4'
+  when: configure_fc == 'true'
+#
+- name: Configure 4G VIC FC LAN Connectivity Policy
+  cisco.ucs.ucs_lan_connectivity:
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    name: "{{ v4G_fc_lan_conn_policy }}"
+    org_dn: org-root/org-{{ organization }}
+    vnic_list:
+    - name: 00-{{ vnic_template_list[0].name }}
+      vnic_template: "{{ vnic_template_list[0].name}}"
+      adapter_policy: 'VMWare'
+      order: '1'
+    - name: 01-{{ vnic_template_list[1].name }}
+      vnic_template: "{{ vnic_template_list[1].name}}"
+      adapter_policy: 'VMWare'
+      order: '2'
+    - name: 02-{{ vnic_template_list[2].name }}
+      vnic_template: "{{ vnic_template_list[2].name}}"
+      adapter_policy: "{{ v4G_16RxQs_adapter_policy_name }}"
+      order: '3'
+    - name: 03-{{ vnic_template_list[3].name }}
+      vnic_template: "{{ vnic_template_list[3].name}}"
+      adapter_policy: "{{ v4G_16RxQs_adapter_policy_name }}"
+      order: '4'
+  when: configure_fc == 'true'

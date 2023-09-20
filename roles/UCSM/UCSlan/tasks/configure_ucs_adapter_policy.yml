@@ -1,0 +1,216 @@
+---
+    # VMware Adapter Policy for High Traffic
+    # The call break down should not be needed but adding all the
+    # parameters to single ucs_managed_object was causing error
+
+
+      - name: Create VMware Ethernet Adapter Policy for High Traffic
+        cisco.ucs.ucs_managed_objects:
+          hostname: "{{ inventory_hostname }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+          objects:
+          - {
+              "module": "ucsmsdk.mometa.adaptor.AdaptorHostEthIfProfile",
+              "class": "AdaptorHostEthIfProfile",
+              "properties": {
+                  "parent_mo_or_dn": "org-root",
+                  "name": "{{adapter_policy_name}}"
+              },
+              "children": [
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthCompQueueProfile",
+                  "class": "AdaptorEthCompQueueProfile",
+                  "properties": {
+                    "count": "9"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthInterruptProfile",
+                  "class": "AdaptorEthInterruptProfile",
+                  "properties": {
+                    "count": "11"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorRssProfile",
+                  "class": "AdaptorRssProfile",
+                  "properties": {
+                    "receive_side_scaling": "enabled"
+                  }
+                }
+              ]
+            }
+
+      - name: Update VMware Ethernet Adapter Policy for High Traffic
+        cisco.ucs.ucs_managed_objects:
+          hostname: "{{ inventory_hostname }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+          objects:
+          - {
+              "module": "ucsmsdk.mometa.adaptor.AdaptorHostEthIfProfile",
+              "class": "AdaptorHostEthIfProfile",
+              "properties": {
+                  "parent_mo_or_dn": "org-root",
+                  "name": "{{adapter_policy_name}}"
+              },
+              "children": [
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthWorkQueueProfile",
+                  "class": "AdaptorEthWorkQueueProfile",
+                  "properties": {
+                    "count": "1",
+                    "ring_size": "4096"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthRecvQueueProfile",
+                  "class": "AdaptorEthRecvQueueProfile",
+                  "properties": {
+                    "count": "8",
+                    "ring_size": "4096"
+                  }
+                }
+              ]
+            }
+      - name: Create VMware Ethernet Adapter Policy for 5G VIC 16 Rx Queues
+        cisco.ucs.ucs_managed_objects:
+          hostname: "{{ inventory_hostname }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+          objects:
+          - {
+              "module": "ucsmsdk.mometa.adaptor.AdaptorHostEthIfProfile",
+              "class": "AdaptorHostEthIfProfile",
+              "properties": {
+                  "parent_mo_or_dn": "org-root",
+                  "name": "{{ v5G_16RxQs_adapter_policy_name }}"
+              },
+              "children": [
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthCompQueueProfile",
+                  "class": "AdaptorEthCompQueueProfile",
+                  "properties": {
+                    "count": "17"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthInterruptProfile",
+                  "class": "AdaptorEthInterruptProfile",
+                  "properties": {
+                    "count": "19"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorRssProfile",
+                  "class": "AdaptorRssProfile",
+                  "properties": {
+                    "receive_side_scaling": "enabled"
+                  }
+                }
+              ]
+            }
+
+      - name: Update VMware Ethernet Adapter Policy for 5G VIC 16 Rx Queues
+        cisco.ucs.ucs_managed_objects:
+          hostname: "{{ inventory_hostname }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+          objects:
+          - {
+              "module": "ucsmsdk.mometa.adaptor.AdaptorHostEthIfProfile",
+              "class": "AdaptorHostEthIfProfile",
+              "properties": {
+                  "parent_mo_or_dn": "org-root",
+                  "name": "{{ v5G_16RxQs_adapter_policy_name }}"
+              },
+              "children": [
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthWorkQueueProfile",
+                  "class": "AdaptorEthWorkQueueProfile",
+                  "properties": {
+                    "count": "1",
+                    "ring_size": "16384"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthRecvQueueProfile",
+                  "class": "AdaptorEthRecvQueueProfile",
+                  "properties": {
+                    "count": "16",
+                    "ring_size": "16384" 
+                  }
+                }
+              ]
+            }
+      - name: Create VMware Ethernet Adapter Policy for 4G VIC 16 Rx Queues
+        cisco.ucs.ucs_managed_objects:
+          hostname: "{{ inventory_hostname }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+          objects:
+          - {
+              "module": "ucsmsdk.mometa.adaptor.AdaptorHostEthIfProfile",
+              "class": "AdaptorHostEthIfProfile",
+              "properties": {
+                  "parent_mo_or_dn": "org-root",
+                  "name": "{{ v4G_16RxQs_adapter_policy_name }}"
+              },
+              "children": [
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthCompQueueProfile",
+                  "class": "AdaptorEthCompQueueProfile",
+                  "properties": {
+                    "count": "17"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthInterruptProfile",
+                  "class": "AdaptorEthInterruptProfile",
+                  "properties": {
+                    "count": "19"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorRssProfile",
+                  "class": "AdaptorRssProfile",
+                  "properties": {
+                    "receive_side_scaling": "enabled"
+                  }
+                }
+              ]
+            }
+
+      - name: Update VMware Ethernet Adapter Policy for 4G VIC 16 Rx Queues
+        cisco.ucs.ucs_managed_objects:
+          hostname: "{{ inventory_hostname }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+          objects:
+          - {
+              "module": "ucsmsdk.mometa.adaptor.AdaptorHostEthIfProfile",
+              "class": "AdaptorHostEthIfProfile",
+              "properties": {
+                  "parent_mo_or_dn": "org-root",
+                  "name": "{{ v4G_16RxQs_adapter_policy_name }}"
+              },
+              "children": [
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthWorkQueueProfile",
+                  "class": "AdaptorEthWorkQueueProfile",
+                  "properties": {
+                    "count": "1",
+                    "ring_size": "4096"
+                  }
+                },
+                {
+                  "module": "ucsmsdk.mometa.adaptor.AdaptorEthRecvQueueProfile",
+                  "class": "AdaptorEthRecvQueueProfile",
+                  "properties": {
+                    "count": "16",
+                    "ring_size": "4096"
+                  }
+                }
+              ]
+            }

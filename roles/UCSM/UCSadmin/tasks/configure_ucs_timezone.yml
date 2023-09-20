@@ -1,0 +1,13 @@
+---
+  # This Task Configures appropriate Timezone in UCS
+  #
+  - name: Configure Time Zone
+    cisco.ucs.ucs_timezone:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      state: present
+      admin_state: enabled
+      timezone: "{{time_zone}}"
+      description: 'Local Time Zone'
+    when: time_zone is defined

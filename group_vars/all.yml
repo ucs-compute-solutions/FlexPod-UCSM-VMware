@@ -1,0 +1,300 @@
+# This is the top-level variable file that will be used for the FlexPod setup. It is setup in this case to have FC
+# SAN boot with FC-NVMe and NFS storage protocols. Notice that the configure_fc variable is set to true, meaning FC
+# boot is configured. We are also assuming that FC-NVMe will only be used with FC boot and that NVMe-TCP will only be
+# used with iSCSI boot. Also, all protocols can be set to 'true'. 
+#
+# Setting the following variables to anything but 'true' ('false' is suggested when not using 'true'), will cause the 
+# protocol to not be configured.
+configure_iscsi: 'false'
+configure_nvme_tcp: 'false'  # Only set this to 'true' if configure_iscsi is set to 'true'
+
+configure_fc: 'true'
+configure_fc_nvme: 'true'   # Only set this to 'true' if configure_fc is set to 'true'  
+
+configure_nfs: 'true'       # In FlexPod, nfs is always used unless you have an All SAN Array (ASA)
+#
+# Update the the following lines to setup NTP Server(s)
+# Note that we are setting up NTP Distribution on the Nexus switches and the first two NTP servers are Nexus Switch mgmt0 IP addresses.
+ntp_servers:
+  - ip_address: "192.168.156.135" # Nexus Switch A mgmt0
+  - ip_address: "192.168.156.136" # Nexus Switch B mgmt0
+  - ip_address: "192.168.156.254"
+ib_mgmt_ntp_servers:                # InBand Management NTP Addresses to be used by ESXi hosts and VMs
+  - ip_address: "10.1.156.135"
+  - ip_address: "10.1.156.136"
+
+# Update the the following lines to setup DNS Server(s)
+# Note: The Nexus and MDS scripts assume exactly 2 DNS servers.
+dns_servers:
+  - ip_address: "192.168.156.250"
+  - ip_address: "192.168.156.251"
+
+# DNS Domain Name
+dns_domain_name: "flexpod.cisco.com"
+
+# Update the the following line to setup Timezone
+time_zone: 'America/New_York'
+
+# ESXi Host Names - Separated by either FC or iSCSI. If not using the protocol, comment out the list entries.
+# These host names and identifiers will be used for NetApp LUN and igroup names and Cisco MDS Device Alias names 
+# and zone entries.
+# They can also be assigned as UCS Profile names.
+
+fc_esxi_hosts:
+  - hostname: "nx-esxi-1"
+    fcp_a_wwpn: "20:00:00:25:b5:a1:6a:01"
+    fcp_b_wwpn: "20:00:00:25:b5:a1:6b:01"
+    fc_nvme_a_wwpn: "20:00:00:25:b5:a1:6a:00"
+    fc_nvme_b_wwpn: "20:00:00:25:b5:a1:6b:00"
+    nvme_nqn: "nqn.2014-08.com.cisco.flexpod:nvme:nx-esxi-1"
+  - hostname: "nx-esxi-2"
+    fcp_a_wwpn: "20:00:00:25:b5:a1:6a:03"
+    fcp_b_wwpn: "20:00:00:25:b5:a1:6b:03"
+    fc_nvme_a_wwpn: "20:00:00:25:b5:a1:6a:02"
+    fc_nvme_b_wwpn: "20:00:00:25:b5:a1:6b:02"
+    nvme_nqn: "nqn.2014-08.com.cisco.flexpod:nvme:nx-esxi-2"
+  - hostname: "nx-esxi-5"
+    fcp_a_wwpn: "20:00:00:25:b5:a1:6a:05"
+    fcp_b_wwpn: "20:00:00:25:b5:a1:6b:05"
+    fc_nvme_a_wwpn: "20:00:00:25:b5:a1:6a:04"
+    fc_nvme_b_wwpn: "20:00:00:25:b5:a1:6b:04"
+    nvme_nqn: "nqn.2014-08.com.cisco.flexpod:nvme:nx-esxi-5"
+
+iscsi_esxi_hosts: #No need to comment these out when only configuring FC Boot.
+  - hostname: "nx-esxi-3"
+    iscsi_iqn: "iqn.2010-11.com.flexpod:aa16-ucs-host:1"
+    nvme_nqn: "nqn.2014-08.com.cisco.flexpod:nvme:nx-esxi-3"
+  - hostname: "nx-esxi-4"
+    iscsi_iqn: "iqn.2010-11.com.flexpod:aa16-ucs-host:2"
+    nvme_nqn: "nqn.2014-08.com.cisco.flexpod:nvme:nx-esxi-4"
+  - hostname: "nx-esxi-6"
+    iscsi_iqn: "iqn.2010-11.com.flexpod:aa16-ucs-host:3"
+    nvme_nqn: "nqn.2014-08.com.cisco.flexpod:nvme:nx-esxi-6"
+
+# Storage SAN Identifiers
+#
+# Storage FCP WWPNs (capture from storage system)
+#
+fcp_lif_01a: '20:01:d0:39:ea:16:6b:8b'
+fcp_lif_02a: '20:03:d0:39:ea:16:6b:8b'
+fcp_lif_01b: '20:02:d0:39:ea:16:6b:8b'
+fcp_lif_02b: '20:04:d0:39:ea:16:6b:8b'
+#
+# Storage FC-NVMe WWPNs (capture from storage system)
+#
+fc_nvme_lif_01a: '20:06:d0:39:ea:16:6b:8b'
+fc_nvme_lif_02a: '20:08:d0:39:ea:16:6b:8b'
+fc_nvme_lif_01b: '20:07:d0:39:ea:16:6b:8b'
+fc_nvme_lif_02b: '20:09:d0:39:ea:16:6b:8b'
+#
+# Storage iSCSI Target Interfaces
+#
+iscsi_lif_01a: '192.168.10.141'
+iscsi_lif_01b: '192.168.20.141'
+iscsi_lif_02a: '192.168.10.142'
+iscsi_lif_02b: '192.168.20.142'
+#
+# Storage iSCSI Target IQN
+#
+storage_iscsi_IQN: 'iqn.1992-08.com.netapp:sn.9336fd2f3ac811ee9393d039ea166b8c:vs.3'
+#
+# This is the list of all the VLANs that will be defined on Nexus, Storage, UCS, and VMware
+# VLAN Names are adjustable and can be modified in here
+# Comment out any VLANs that are not used here and below (iSCSI and NVMe-TCP)
+#
+native_vlan_name: 'Native-Vlan' # Native VLAN
+native_vlan_id: 2
+oob_vlan_name: 'OOB-MGMT' # Out of Band Mgmt VLAN
+oob_vlan_id: 13
+ib_vlan_name: 'IB-MGMT' # IN BAND Management VLAN
+ib_vlan_id: 113
+vm_vlan_name: 'VM-Traffic' # VLAN to carry VM traffic on VDS
+vm_vlan_id: 800 
+vmotion_vlan_name: 'vMotion' # vMotion VLAN
+vmotion_vlan_id: 3000
+nfs_vlan_name: 'Infra-NFS' # NFS Traffic between ESXi and Storage
+nfs_vlan_id: 3050
+# iSCSI and NVMe-TCP VLANs are commented out here because only FC, FC-NVMe, and NFS are configured.
+#iscsiA_vlan_name: 'Infra-iSCSI-A' # iSCSI-A VLAN (if needed)
+#iscsiA_vlan_id: 3010
+#iscsiB_vlan_name: 'Infra-iSCSI-B' # iSCSI-B VLAN (if needed)
+#iscsiB_vlan_id: 3020
+#nvme_tcpA_vlan_name: 'Infra-NVMe-TCP-A' # NVMe-TCP-A VLAN (if needed)
+#nvme_tcpA_vlan_id: 3030
+#nvme_tcpB_vlan_name: 'Infra-NVMe-TCP-B' # NVMe-TCP-B VLAN (if needed)
+#nvme_tcpB_vlan_id: 3040
+#
+# lan_state should be set to 'present' to configure the objects
+# In future, this parameter will be used for deleting the configuration
+#
+lan_state : 'present'
+#
+# VLAN Lists - Comment out or remove any VLANs not being used.
+#
+# The ib_mgmt_vlan_list contains one entry, the IB-MGMT VLAN.
+#
+ib_mgmt_vlan_list:
+  - name: "{{ ib_vlan_name }}"
+    id: "{{ ib_vlan_id }}"
+    native: 'no'
+    state: "{{lan_state}}"
+#
+# The storage_vlan_list contains VLANs that are configured on the storage controllers.
+# These VLANs are also configured in the UCS and in the Nexus switches. This list has
+# two extra fields, storage_protocol, and fabric. Do not remove these extra fields.
+#
+storage_vlan_list:
+  - name: "{{ nfs_vlan_name }}"
+    id: "{{ nfs_vlan_id }}"
+    native: 'no'
+    storage_protocol: NFS
+    state: "{{lan_state}}"
+    # iSCSI and NVMe-TCP A and B VLANs should be deleted or commended out for Fiber-Channel-Only deployments
+#  - name: "{{ iscsiA_vlan_name }}"
+#    id: "{{ iscsiA_vlan_id }}"
+#    native: 'no'
+#    storage_protocol: iSCSI
+#    fabric: A
+#    state: "{{lan_state}}"
+#  - name: "{{ iscsiB_vlan_name }}"
+#    id: "{{ iscsiB_vlan_id }}"
+#    native: 'no'
+#    storage_protocol: iSCSI
+#    fabric: B
+#    state: "{{lan_state}}"
+#  - name: "{{ nvme_tcpA_vlan_name }}"
+#    id: "{{ nvme_tcpA_vlan_id }}"
+#    native: 'no'
+#    storage_protocol: NVMe
+#    fabric: A
+#    state: "{{lan_state}}"
+#  - name: "{{ nvme_tcpB_vlan_name }}"
+#    id: "{{ nvme_tcpB_vlan_id }}"
+#    native: 'no'
+#    storage_protocol: NVMe
+#    fabric: B
+#    state: "{{lan_state}}"
+
+# The remaining_vlan_list contains all vlans that are not configured on storage,
+# but are configured in Nexus and UCS.
+#
+remaining_vlan_list:
+  - name: "{{ native_vlan_name }}"
+    id: "{{ native_vlan_id }}"
+    native: 'yes'
+    state: "{{lan_state}}"
+  - name: "{{ oob_vlan_name }}"
+    id: "{{ oob_vlan_id }}"
+    native: 'no'
+    state: "{{lan_state}}"
+  - name: "{{ vm_vlan_name }}"
+    id: "{{ vm_vlan_id }}"
+    native: 'no'
+    state: "{{lan_state}}"
+  - name: "{{ vmotion_vlan_name }}"
+    id: "{{ vmotion_vlan_id }}"
+    native: 'no'
+    state: "{{lan_state}}"
+
+# VLANs definitions below will be used to setup trunk ports on Nexus Switches
+# all_vlans_list: for vpc_peer_link and UCS FI trunk ports
+# These VLANs must be same or a subset of the vlan_list abovea
+# Comment out or remove any VLANs that are not used (iSCSI and NVMe-TCP)
+# In future, these values will be auto-generated
+#
+all_vlans_list: "{{ oob_vlan_id }},{{ ib_vlan_id }},{{ vm_vlan_id }},{{ nfs_vlan_id }},{{ vmotion_vlan_id }}#remaining list commented out,{{ iscsiA_vlan_id }},{{ iscsiB_vlan_id }},{{ nvme_tcpA_vlan_id }},{{ nvme_tcpB_vlan_id }}"
+# storage_vlans_list: for storage uplink trunk ports
+storage_vlans_list: "{{ ib_vlan_id }},{{ nfs_vlan_id }}#,{{ iscsiA_vlan_id }},{{ iscsiB_vlan_id }},{{ nvme_tcpA_vlan_id }},{{ nvme_tcpB_vlan_id }}"
+# mgmt_vlans_list: for uplink/management switch trunk port
+mgmt_vlans_list: "{{ oob_vlan_id }},{{ ib_vlan_id }},{{ vm_vlan_id }}"
+#
+# VLAN/Portgroup List with Pinning info for VMware Distributed Switch vDSO for vMotion and Tenant Data/Storage
+vds0_vlan_list:
+  - name: "{{ vm_vlan_name }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ vm_vlan_name }}"
+    id: "{{ vm_vlan_id }}"
+    active_uplinks: 
+      - "Uplink 1"
+      - "Uplink 2"
+    standby_uplinks: []
+  - name: "{{ vmotion_vlan_name }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ vmotion_vlan_name }}"
+    id: "{{ vmotion_vlan_id }}"
+    active_uplinks: "Uplink 2"
+    standby_uplinks: "Uplink 1"
+#
+# VLAN/Portgroup List with Pinning info for VMware Distributed Switch iSCSI-NVMe-TCP-vDS for iSCSI and NVMe Storage
+# No need to comment this out if using FC, FC-NVMe, NFS. It will just not be used.
+iscsi_nvme_tcp_vds_vlan_list:
+  - name: "{{ iscsiA_vlan_name }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ iscsiA_vlan_name }}"
+    id: '0'  # iSCSI VLAN A is set as native for this vNIC
+    active_uplinks:
+      - "Uplink 1"
+    standby_uplinks: []
+  - name: "{{ iscsiB_vlan_name }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ iscsiB_vlan_name }}"
+    id: '0'  # iSCSI VLAN B is set as native for this vNIC
+    active_uplinks:
+      - "Uplink 2"
+    standby_uplinks: []
+  - name: "{{ nvme_tcpA_vlan_name }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ nvme_tcpA_vlan_name }}"
+    id: "{{ nvme_tcpA_vlan_id }}"
+    active_uplinks:
+      - "Uplink 1"
+    standby_uplinks: []
+  - name: "{{ nvme_tcpB_vlan_name }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ nvme_tcpB_vlan_name }}"
+    id: "{{ nvme_tcpB_vlan_id }}"
+    active_uplinks:
+      - "Uplink 2"
+    standby_uplinks: []
+
+nfs_portgroup: "VMKernel-Infra-NFS"
+esxi_nfs_vlan: "{{ nfs_vlan_id }}"
+#
+oob_mgmt_portgroup: "OOB-MGMT Network"
+oob_mgmt_vlan: "{{ oob_vlan_id }}"
+#
+#VSAN Parameters
+#
+vsan_A_name: 'FlexPod-Fabric-A'
+vsan_A_id: 101
+vsan_A_fcoe_vlan: 101
+#
+vsan_B_name: 'FlexPod-Fabric-B'
+vsan_B_id: 102
+vsan_B_fcoe_vlan: 102
+#
+# VMware Configurations
+# provide the user names and passwords to connect to the ESXi servers
+# and VMware vCenter
+#
+esxi_username: root
+esxi_password: "{{ ansible_ssh_pass }}"
+#
+vcenter_dc: FlexPod-DC
+vcenter_cluster: FlexPod-Management
+#
+vcenter_hostname: "10.1.156.100"
+# e.g. vcenter_hostname: 10.50.160.100
+vcenter_username: "administrator@vsphere.local"
+# e.g. vcenter_username: administrator@vsphere.local
+vcenter_password: "<password>"
+# e.g. vcenter_password: "cisco!23"
+#
+# DVS Parameters; 
+#
+dvs_name: "vDS0"
+iscsi_nvme_tcp_dvs_name: "iSCSI-NVMe-TCP-vDS" # Change to "iSCSI-vDS" if not using NVMe-TCP
+dv_version: "8.0" # This is ignored as the scripts use the latest vCenter version, but left in to show desired version.
+dv_uplink: "2"
+dv_protocol: "lldp"
+dv_operation: "both"

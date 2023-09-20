@@ -1,0 +1,42 @@
+---
+# Configure SAN Connectivity Policy if configure_fc is set
+#
+- name: Configure SAN Connectivity Policy
+  cisco.ucs.ucs_san_connectivity:
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    name: "{{ san_policy_name }}"
+    wwnn_pool: "{{ wwnn_pool_name }}"
+    org_dn: "org-root/org-{{ organization }}"
+    vhba_list:
+    - name: "{{ san_policy_fcp_vhba_a_name }}"
+      vhba_template: "{{ vhba_template_a_name }}"
+      adapter_policy: VMWare
+    - name: "{{ san_policy_fcp_vhba_b_name }}"
+      vhba_template: "{{ vhba_template_b_name }}"
+      adapter_policy: VMWare
+  when: not (configure_fc_nvme == 'true') and (configure_fc == 'true')
+#
+- name: Configure SAN Connectivity Policy with FC-NVMe
+  cisco.ucs.ucs_san_connectivity:
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    name: "{{ san_policy_name }}"
+    wwnn_pool: "{{ wwnn_pool_name }}"
+    org_dn: "org-root/org-{{ organization }}"
+    vhba_list:
+    - name: "{{ san_policy_fcp_vhba_a_name }}"
+      vhba_template: "{{ vhba_template_a_name }}"
+      adapter_policy: VMWare
+    - name: "{{ san_policy_fcp_vhba_b_name }}"
+      vhba_template: "{{ vhba_template_b_name }}"
+      adapter_policy: VMWare
+    - name: "{{ san_policy_fc_nvme_vhba_a_name }}"
+      vhba_template: "{{ vhba_template_a_name }}"
+      adapter_policy: FCNVMeInitiator
+    - name: "{{ san_policy_fc_nvme_vhba_b_name }}"
+      vhba_template: "{{ vhba_template_b_name }}"
+      adapter_policy: FCNVMeInitiator
+  when: configure_fc_nvme == 'true'

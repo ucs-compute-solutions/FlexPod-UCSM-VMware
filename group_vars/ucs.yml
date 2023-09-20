@@ -1,0 +1,43 @@
+---
+# Global Variables for UCS Configurations
+# These Variables are used across different roles in UCS configurations
+# e.g. "organization" is used under san, lan, server and admin roles
+# Adjust the variable values as per your requirements
+
+#
+#UCS Organization
+organization: 'FlexPod-VMware'
+#Predominant VIC Type - Set to "4G" or "5G" for fourth(and earlier) or fifth generation VICs
+vic_type: '5G'
+#UCS Alternate User to admin
+ucs_alt_user: 'flexadmin'
+ucs_alt_passwd: <password>
+# VMware High Traffic Adapter Policy
+adapter_policy_name: 'VMware-HighTrf'
+# VMware 5G VIC 16RxQ Adapter Policy
+v5G_16RxQs_adapter_policy_name: 'VMware-5G-16RxQs'
+# VMware 4G VIC 16RxQ Adapter Policy
+v4G_16RxQs_adapter_policy_name: 'VMware-4G-16RxQs'
+# IQN Pool Name
+iqn_pool_name: 'IQN-Pool'
+#
+iscsi_a_pool_name: 'iSCSI-Pool-A'
+iscsi_b_pool_name: 'iSCSI-Pool-B'
+# iSCSI LAN Connectivity Policy Parameters
+v5G_iscsi_lan_conn_policy: '5G-VIC-iSCSI-Bt'
+v4G_iscsi_lan_conn_policy: '4G-VIC-iSCSI-Bt'
+iscsi_a_vnic_name: 'iSCSI-Boot-A'
+iscsi_b_vnic_name: 'iSCSI-Boot-B'
+#
+# FC LAN Connectivity Policy Parameters
+v5G_fc_lan_conn_policy: '5G-VIC-FCP-Boot'
+v4G_fc_lan_conn_policy: '4G-VIC-FCP-Boot'
+# vHBA Names
+vhba_template_a_name: 'vHBA-A'
+vhba_template_b_name: 'vHBA-B'
+# SAN Policy Paramters
+san_policy_name: 'FC-Boot'
+san_policy_fcp_vhba_a_name: 'FCP-Fabric-A'
+san_policy_fcp_vhba_b_name: 'FCP-Fabric-B'
+san_policy_fc_nvme_vhba_a_name: 'FC-NVMe-Fabric-A'
+san_policy_fc_nvme_vhba_b_name: 'FC-NVMe-Fabric-B'
