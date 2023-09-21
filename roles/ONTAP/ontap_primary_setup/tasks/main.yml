@@ -95,7 +95,8 @@
   tags:
     - ontap_create_data_aggr
 
-- name: Print Disk Class
+# Print disk class
+- name: Print disk class
   ansible.builtin.debug:
     msg: "{{result.ontap_info.storage_disks.records[0].class}}"
   tags:
@@ -395,7 +396,7 @@
   tags:
     - ontap_fips_config
 
-#Debug message to get the status of Cluster FIPS mode
+# Debug message to get the status of Cluster FIPS mode
 - ansible.builtin.debug: msg="Cluster FIPS mode is enabled."
   when: is_fips_enabled == true
   tags:
