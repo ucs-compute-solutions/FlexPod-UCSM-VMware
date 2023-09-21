@@ -122,7 +122,7 @@ svm_specs:
   svm_root_vol: NX_Infra_SVM_root
   allowed_protocols:  #provide the values in lower case only, supported options for this solution are nfs, fcp, iscsi, nvme
     - nfs             #For FC-NVMe config, use fcp and nvme
-    - fcp             #For NVMe/TCP config, use nvme and iscsi
+    - fcp             #For NVMe/TCP config with iSCSI boot, use nvme and iscsi
     - nvme
 #    - iscsi
   client_match: 192.168.50.0/24
