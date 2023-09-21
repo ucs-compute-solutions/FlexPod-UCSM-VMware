@@ -9,6 +9,7 @@ The ONTAP deployment automation is based on the following roles:
 	ontap_svm
 	ontap_volumes
 	ontap_lifs
+	esxi_datastores
 	ontap_luns
 	ontap_nvme
 	ontap_finalize_setup
