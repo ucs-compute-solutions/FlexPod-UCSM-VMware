@@ -330,8 +330,8 @@
   tags:
     - ontap_fc_adapters
 
-# Configure autosupport
-- name: Configure autosupport
+# Configure AutoSupport
+- name: Configure AutoSupport
   netapp.ontap.na_ontap_autosupport:
     mail_hosts: "{{autosupport_vars.mail_hosts}}"
     node_name: "{{item.node_name}}"
