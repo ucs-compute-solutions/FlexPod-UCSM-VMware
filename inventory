@@ -1,4 +1,4 @@
-#ONTAP Cluster Management IP. List only one ONTAP cluster IP.
+# ONTAP Cluster Management IP. List only one ONTAP cluster IP.
 [ontap]
 192.168.156.140
 
