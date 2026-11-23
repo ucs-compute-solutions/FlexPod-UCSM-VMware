@@ -1,0 +1,199 @@
+---
+# Variables for Server configurations of UCSM
+# Adjust the variable values as per your requirements
+
+# UCS Server Bundles for Default Host Firmware Package
+# These bundles need to already be installed on the FIs
+blade_bundle_version: '4.2(3d)B'
+rack_bundle_version: '4.2(3d)C'
+
+# Assignment order for various pool parameters
+server_assign_order: 'sequential'
+# To add or remove certain parameters
+server_state: 'present'
+
+# UUID Pool Information
+uuid_pool_name: UUID-Pool
+uuid_start: '0000-0000A1600001'
+uuid_end: '0000-0000A1600020'
+
+# Server Pool Information
+server_pool_name: 'Infra-Pool'
+# Comment out a list to ignore the rack or blade configuration in the server pools
+# Add additional servers or blades to the list using the same format.
+#
+# C-Series Rack Servers
+rack_list:
+  - id: '1'
+  - id: '2'
+#
+#B-Series Blade Servers
+blade_list:
+ - chassis_number: '1'
+   slot_number: '3'
+ - chassis_number: '1'
+   slot_number: '4'
+ - chassis_number: '1'
+   slot_number: '5'
+ - chassis_number: '1'
+   slot_number: '6'
+#
+# Power Control Policy
+power_policy_name: 'No-Power-Cap'
+#
+# Local Disk Policy
+local_disk_policy_name: 'IgnoreDisk'
+local_disk_mode: 'any-configuration'
+#
+# BIOS Policy Intel-M5-Virt
+intel_m5_virt_bios_policy_name: 'Intel-M5-Virt'
+intel_m5_virt_bios_setting_list:
+  - name: 'Enable CDN Control'
+    mo_token: 'tokn-featr-Consistent Device Name Control/tokn-param-cdnEnable'
+    mo_setting: 'Enabled'
+  - name: 'Disable Quiet Boot'
+    mo_token: 'tokn-featr-Quiet Boot/tokn-param-QuietBoot'
+    mo_setting: 'Disabled'
+  - name: 'Power Technology - Custom'
+    mo_token: 'tokn-featr-Processor Energy Configuration/tokn-param-CPUPowerManagement'
+    mo_setting: 'Custom'
+  - name: 'Processor C state - Disabled'
+    mo_token: 'tokn-featr-Processor C State/tokn-param-ProcessorCstate'
+    mo_setting: 'Disabled'
+  - name: 'Processor C1E - Disabled'
+    mo_token: 'tokn-featr-Processor C1E/tokn-param-ProcessorC1E'
+    mo_setting: 'Disabled'
+  - name: 'Processor C3 Report - Disabled'
+    mo_token: 'tokn-featr-Processor C3 Report/tokn-param-ProcessorC3Report'
+    mo_setting: 'Disabled'
+  - name: 'Processor C6 Report - Disabled'
+    mo_token: 'tokn-featr-Processor C6 Report/tokn-param-ProcessorC6Report'
+    mo_setting: 'Disabled'
+  - name: 'Processor C7 Report - Disabled'
+    mo_token: 'tokn-featr-Processor C7 Report/tokn-param-ProcessorC7Report'
+    mo_setting: 'Disabled'
+  - name: 'NVM Performance Setting - Balanced Profile'
+    mo_token: 'tokn-featr-NVM Performance Setting/tokn-param-NvmdimmPerformConfig'
+    mo_setting: 'Balanced-Profile'
+#
+# BIOS Policy Intel-M6-Virt
+intel_m6_virt_bios_policy_name: 'Intel-M6-Virt'
+intel_m6_virt_bios_setting_list:
+  - name: 'Enable CDN Control'
+    mo_token: 'tokn-featr-Consistent Device Name Control/tokn-param-cdnEnable'
+    mo_setting: 'Enabled'
+  - name: 'Disable Quiet Boot'
+    mo_token: 'tokn-featr-Quiet Boot/tokn-param-QuietBoot'
+    mo_setting: 'Disabled'
+  - name: 'Set Enhanced CPU Performance to Auto'
+    mo_token: 'tokn-featr-CpuPerfEnhancement/tokn-param-CpuPerfEnhancement'
+    mo_setting: 'Auto'
+  - name: 'Set Processor C1E to Enabled'
+    mo_token: 'tokn-featr-Processor C1E/tokn-param-ProcessorC1E'
+    mo_setting: 'Enabled'
+  - name: 'Set Processor C6 Report to Enabled'
+    mo_token: 'tokn-featr-Processor C6 Report/tokn-param-ProcessorC6Report'
+    mo_setting: 'Enabled'
+  - name: 'Set Energy Efficient Turbo to Enabled'
+    mo_token: 'tokn-featr-Intel Turbo Boost Tech/tokn-param-EnergyEfficientTurbo'
+    mo_setting: 'Enabled'
+  - name: 'NVM Performance Setting - Balanced Profile'
+    mo_token: 'tokn-featr-NVM Performance Setting/tokn-param-NvmdimmPerformConfig'
+    mo_setting: 'Balanced-Profile'
+#
+# BIOS Policy AMD-C125-Virt
+amd_c125_virt_bios_policy_name: 'AMD-C125-Virt'
+amd_c125_virt_bios_setting_list:
+  - name: 'Enable CDN Control'
+    mo_token: 'tokn-featr-Consistent Device Name Control/tokn-param-cdnEnable'
+    mo_setting: 'Enabled'
+  - name: 'Disable Quiet Boot'
+    mo_token: 'tokn-featr-Quiet Boot/tokn-param-QuietBoot'
+    mo_setting: 'Disabled'
+  - name: 'Set Determinism Slider to Power'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnDeterminismSlider'
+    mo_setting: 'Power'
+#
+# BIOS Policy AMD-M6-Virt
+amd_m6_virt_bios_policy_name: 'AMD-M6-Virt'
+amd_m6_virt_bios_setting_list:
+  - name: 'Enable CDN Control'
+    mo_token: 'tokn-featr-Consistent Device Name Control/tokn-param-cdnEnable'
+    mo_setting: 'Enabled'
+  - name: 'Disable Quiet Boot'
+    mo_token: 'tokn-featr-Quiet Boot/tokn-param-QuietBoot'
+    mo_setting: 'Disabled'
+  - name: 'Set NUMA Nodes per Socket to NPS4'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsDfCmnDramNps'
+    mo_setting: 'NPS4'
+  - name: 'Set IOMMU to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnGnbNbIOMMU'
+    mo_setting: 'Auto'
+  - name: 'Set CPU SMT Mode to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCpuSmtCtrl'
+    mo_setting: 'Auto'
+  - name: 'Set SMT Mode to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-SmtMode'
+    mo_setting: 'Auto'
+  - name: 'Set Core Performance Boost to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnCpuCpb'
+    mo_setting: 'Auto'
+  - name: 'Set Global C-State Control to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnCpuGlobalCstateCtrl'
+    mo_setting: 'Auto'
+  - name: 'Set L1 Stream HW Prefetcher to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnCpuL1StreamHwPrefetcher'
+    mo_setting: 'Auto'
+  - name: 'Set L2 Stream HW Prefetcher to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnCpuL2StreamHwPrefetcher'
+    mo_setting: 'Auto'
+  - name: 'Set Determinism Slider to Power'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnDeterminismSlider'
+    mo_setting: 'Power'
+  - name: 'Set Efficiency Mode Enable to Auto'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnEfficiencyModeEn'
+    mo_setting: 'Auto'
+  - name: 'Set SVM Mode to Enabled'
+    mo_token: 'tokn-featr-Processor/tokn-param-SvmMode'
+    mo_setting: 'Enabled'
+  - name: 'Set ACPI SRAT L3 Cache As NUMA Domain to Enabled'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsDfCmnAcpiSratL3Numa'
+    mo_setting: 'Enabled'
+  - name: 'Set APBDIS to 1'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnApbdis'
+    mo_setting: '1'
+  - name: 'Set Fixed SOC P-State to P0'
+    mo_token: 'tokn-featr-Processor/tokn-param-CbsCmnFixedSocPstate'
+    mo_setting: 'P0'
+  - name: 'Set Cisco xGMI Max Speed to Disabled'
+    mo_token: 'tokn-featr-Processor/tokn-param-CiscoXgmiMaxSpeed'
+    mo_setting: 'Disabled'
+#
+# BIOS Policy to Use in Service Profile Templates - Populate with either "{{ intel_m6_virt_bios_policy_name }}",
+# "{{ intel_m5_virt_bios_policy_name }}", or "{{ amd_c125_virt_bios_policy_name }}", or "{{ amd_m6_virt_bios_policy_name }}"
+bios_policy_to_use: "{{ intel_m6_virt_bios_policy_name }}"
+#  
+# vMedia Policy - Mount CD ISO via HTTP
+# For Mounting http://{{ vmedia_server_ip }}/{{ vmedia_iso_path }}/{{ vmedia_iso_filename }}
+# i.e http://10.1.156.150/software/vSphere-7-Update-2/VMware_ESXi_7.0.2_17867351_Custom_Cisco_4.1.3_a.iso
+vmedia_policy_name: 'ESXi-8-CC-HTTP'
+vmedia_server_ip: '10.1.156.150'
+vmedia_iso_path: 'software/vSphere-8.0'
+vmedia_iso_filename: 'VMware-ESXi-8.0-20513097-Custom-Cisco-4.2.3-b.iso'
+#
+# IPMI/Redfish Access Profile
+ipmi_pol_name: 'IPMI-Profile'
+ipmi_user_id: 'ipmiadmin'
+ipmi_password: "{{ password }}"
+#
+# iSCSI Boot Policy
+iscsi_boot_policy_name: 'Boot-iSCSI'
+#
+# iSCSI Service Profile Template
+iscsi_SPT_name: "Intel-M6-{{ vic_type }}-VIC-iSCSI-BT"
+#
+# FC Boot Policy
+fc_boot_policy_name: 'Boot-FCP'
+#
+# FC Service Profile Template
+fc_SPT_name: "Intel-M6-{{ vic_type }}-VIC-FCP-BT"

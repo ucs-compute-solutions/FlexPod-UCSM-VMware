@@ -1,0 +1,6 @@
+---
+# Variables for Admin configurations of UCSM
+# Un-comment the variables and set appropriate values to configure various
+# parameters. If a variable is commented out, the script will skip configuration
+# for that variable.
+

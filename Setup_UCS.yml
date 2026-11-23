@@ -1,0 +1,78 @@
+---
+# Playbook to setup UCS Server and SAN configurations
+#
+- hosts: ucs
+  connection: local
+  collections:
+  - cisco.ucs
+  gather_facts: no
+  roles:
+    ### Setup Equipment related tasks in UCS
+    #
+    # Configure Info Policy for Neighbor Discovery
+    # Configure chassis discovery policy
+    # Enable server port auto-discovery policy
+    # Setup Server Ports to connect to Chassis and Rack Servers
+    # Configure normal UDLD Policies
+    # Setup Uplink Ports and Port-Channels
+    # Disable unused FC ports to avoid alerts
+    #
+    - UCSM/UCSequipment
+    #
+    ### Setup Admin tasks in UCS
+    #
+    # DNS Configuration 
+    # Timezone 
+    # NTP server 
+    # Organization - for defining UCS policies under defined org
+    # Add UCS Alternate admin User
+    #
+    # To configure the "optional" parameters, uncomment and update the variables
+    # under roles/UCSadmin/defaults/main.yml
+    - UCSM/UCSadmin
+    #
+    #
+    ### Setup LAN Tasks in UCS
+    #
+    # Mgmt IP Pool
+    # iSCSI IP Pools (if required)
+    # UCS QoS System Class
+    # VLANs
+    # MAC pools
+    # Network Control Policy - Enable CDP and LLDP
+    # VMware Adapter Policy for High Traffic
+    # vNIC templates (except iSCSI vNIC templates)
+    # iSCSI vNIC templates (if required)
+    # iSCSI LAN Connectivity Policy (if required)
+    # FC LAN Connectivity Policy (if required)
+    #
+    - UCSM/UCSlan
+    #
+    ### Create Configurations under SAN Tab in UCS
+    #
+    # IQN pools (when con)
+    # WWNN pools
+    # WWPN A and B Pools
+    # VSAN A and VSAN B (if required)
+    # vHBA Templates
+    # enable VSAN trunking for uplink ports (if required)
+    - UCSM/UCSsan
+    #
+    #
+    ### Create Configurations under Server Tab in UCS
+    #
+    # UUID pool
+    # Server Pool Configuration
+    # Host Firmware Package
+    # Power Control Policy - No Power CAP
+    # Modify default Maintenence policy - Add User Ack for reboot
+    # VMware High Traffic Adapter Policy for VDS
+    # Local Disk Policy - Ignore Local Disks
+    # IPMI Access Profile
+    # Intel Persistent Memory Policies
+    # vMedia Policy
+    # Three BIOS Policies
+    # iSCSI Boot Policy (if required)
+    # iSCSI Service Profile Template (if required)
+    # FCP Boot Policy (if required)
+    - UCSM/UCSserver

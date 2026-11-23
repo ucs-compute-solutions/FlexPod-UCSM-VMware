@@ -1,0 +1,203 @@
+---
+  # Configure Service Profile Templates for iSCSI or FC
+  # if configure_iscsi and/or configure_fc are set
+
+  # iSCSI Service Profile Templates
+  #
+  - name: Configure Service Profile Template for iSCSI for M6 Servers with 5G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ iscsi_SPT_name }}"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v5G_iscsi_lan_conn_policy }}"
+      iqn_pool: "{{ iqn_pool_name }}"
+      boot_policy: "{{ iscsi_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+    tags:
+      - Create_SPT
+    when: (configure_iscsi == 'true') and (vic_type == '5G')
+  #
+  - name: Configure vMedia Service Profile Template for iSCSI for M6 Servers with 5G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ iscsi_SPT_name }}-vM"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v5G_iscsi_lan_conn_policy }}"
+      iqn_pool: "{{ iqn_pool_name }}"
+      boot_policy: "{{ iscsi_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+      vmedia_policy: "{{ vmedia_policy_name }}"
+    tags:
+      - Create_SPT
+    when: (configure_iscsi == 'true') and (vic_type == '5G')
+#
+  - name: Configure Service Profile Template for iSCSI for M6 Servers with 4G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ iscsi_SPT_name }}"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v4G_iscsi_lan_conn_policy }}"
+      iqn_pool: "{{ iqn_pool_name }}"
+      boot_policy: "{{ iscsi_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+    tags:
+      - Create_SPT
+    when: (configure_iscsi == 'true') and (vic_type == '4G')
+#
+  - name: Configure vMedia Service Profile Template for iSCSI for M6 Servers with 4G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ iscsi_SPT_name }}-vM"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v4G_iscsi_lan_conn_policy }}"
+      iqn_pool: "{{ iqn_pool_name }}"
+      boot_policy: "{{ iscsi_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+      vmedia_policy: "{{ vmedia_policy_name }}"
+    tags:
+      - Create_SPT
+    when: (configure_iscsi == 'true') and (vic_type == '4G')
+#
+  # FC Service Profile Template
+  #
+  - name: Configure Service Profile Template for FCP for M6 Servers with 5G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ fc_SPT_name }}"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v5G_fc_lan_conn_policy }}"
+      boot_policy: "{{ fc_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      san_connectivity_policy: "{{ san_policy_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+    tags:
+      - Create_SPT
+    when: (configure_fc == 'true') and (vic_type == '5G')
+  #
+  - name: Configure vMedia Service Profile Template for FCP for M6 Servers with 5G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ fc_SPT_name }}-vM"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v5G_fc_lan_conn_policy }}"
+      boot_policy: "{{ fc_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      san_connectivity_policy: "{{ san_policy_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+      vmedia_policy: "{{ vmedia_policy_name }}"
+    tags:
+      - Create_SPT
+    when: (configure_fc == 'true') and (vic_type == '5G')
+#
+  - name: Configure Service Profile Template for FCP for M6 Servers with 4G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ fc_SPT_name }}"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v4G_fc_lan_conn_policy }}"
+      boot_policy: "{{ fc_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      san_connectivity_policy: "{{ san_policy_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+    tags:
+      - Create_SPT
+    when: (configure_fc == 'true') and (vic_type == '4G')
+#
+  - name: Configure vMedia Service Profile Template for FCP for M6 Servers with 4G VICs
+    cisco.ucs.ucs_service_profile_template:
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      name: "{{ fc_SPT_name }}-vM"
+      org_dn: "org-root/org-{{ organization }}"
+      template_type: 'updating-template'
+      uuid_pool: "{{ uuid_pool_name }}"
+      lan_connectivity_policy: "{{ v4G_fc_lan_conn_policy }}"
+      boot_policy: "{{ fc_boot_policy_name }}"
+      maintenance_policy: 'default'
+      power_control_policy: "{{ power_policy_name }}"
+      local_disk_policy: "{{ local_disk_policy_name }}"
+      server_pool: "{{ server_pool_name }}"
+      san_connectivity_policy: "{{ san_policy_name }}"
+      bios_policy: "{{ bios_policy_to_use }}"
+      host_firmware_package: 'default'
+      ipmi_access_profile: "{{ ipmi_pol_name }}"
+      power_state: 'down'
+      vmedia_policy: "{{ vmedia_policy_name }}"
+    tags:
+      - Create_SPT
+    when: (configure_fc == 'true') and (vic_type == '4G')

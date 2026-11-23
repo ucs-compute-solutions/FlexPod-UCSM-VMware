@@ -1,0 +1,24 @@
+---
+# Configure VSAN A and B if configure_fc is set
+#
+- name: Configure VSAN A
+  cisco.ucs.ucs_vsans:
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    name: "{{ vsan_A_name }}"
+    fabric: 'A'
+    vsan_id: "{{ vsan_A_id }}"
+    vlan_id: "{{ vsan_A_fcoe_vlan }}"
+  when: configure_fc == 'true'
+#
+- name: Configure VSAN B
+  cisco.ucs.ucs_vsans:
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    name: "{{ vsan_B_name }}"
+    fabric: 'B'
+    vsan_id: "{{ vsan_B_id }}"
+    vlan_id: "{{ vsan_B_fcoe_vlan }}"
+  when: configure_fc == 'true'
